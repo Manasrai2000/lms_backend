@@ -1,0 +1,88 @@
+# Node / JavaScript
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build outputs
+dist/
+build/
+out/
+lib/
+coverage/
+.nyc_output/
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Runtime and process files
+logs/
+*.log
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Migration artifacts / database dumps (common generated files)
+*.sqlite
+*.sqlite3
+*.db
+*.sql
+*.sql.gz
+/migrations/*.sql
+/migrations/*.sqlite
+/migrations/*.sqlite3
+
+# Docker
+.env.docker
+docker-compose.override.yml
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Misc caches
+.cache/
+.cache-loader/
+tmp/
+temp/
+
+# Yarn PnP
+.pnp.cjs
+.pnp.js
+
+# Optional: keep Yarn v2+ important files but ignore rest of .yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Tests
+coverage/
+test-results/
+
+# Logs from process managers
+pm2.log
+
+# Ignore compiled JS in local build dirs (keep source JS out of repo if built)
+dist/**/*.js
+build/**/*.js
