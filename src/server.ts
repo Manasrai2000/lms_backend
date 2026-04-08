@@ -5,28 +5,22 @@ import app from "./app";
 import { AppDataSource } from "./config/data-source";
 import { env } from "./config/env";
 
-// Initialize DB connection once (works for both local and Render)
-let isInitialized = false;
+const PORT = env.port || 3000;
 
-const initializeDb = async () => {
-  if (!isInitialized && !AppDataSource.isInitialized) {
-    await AppDataSource.initialize();
-    isInitialized = true;
-    console.log("Database connected");
-  }
-};
+AppDataSource.initialize()
+  .then(() => {
+    console.log("✅ Database connected");
 
-initializeDb().catch((err) => {
-  console.error("DB connection error:", err);
-});
-
-// For local development: start the HTTP server
-if (process.env.NODE_ENV !== "production") {
-  app.listen(env.port, () => {
-    console.log(`Server running on port ${env.port}`);
-    console.log(`API docs: http://localhost:${env.port}/docs`);
+    // Always start the HTTP server (Render is a real server, not serverless)
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📖 API docs: https://lms-backend-tpz2.onrender.com/docs`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ DB connection failed:", err.message);
+    process.exit(1); // Crash fast so Render restarts and surfaces the real error
   });
-}
 
-// Export for Render/Vercel serverless
+// Export for Vercel (serverless) — Vercel won't call app.listen()
 export default app;
