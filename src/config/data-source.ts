@@ -5,13 +5,14 @@ import { User } from "../modules/user/user.model";
 import { Activity } from "../modules/activity/activity.model";
 import { Subscription } from "../modules/subscription/subscription.model";
 import { DeviceSession } from "../modules/device/device.model";
+import path from "path";
 
-const isProduction = process.env.NODE_ENV === "production";
+// Detect if running as compiled JS (Render/production) or TypeScript (ts-node/dev)
+// __filename ends with '.ts' in ts-node, '.js' in compiled production
+const ext = __filename.endsWith(".ts") ? "*.ts" : "*.js";
+const migrationsPath = path.join(__dirname, `../migrations/${ext}`);
 
 const entities = [User, Activity, Subscription, DeviceSession];
-const migrations = isProduction
-  ? ["dist/migrations/*.js"]
-  : ["src/migrations/*.ts"];
 
 export const AppDataSource = new DataSource(
   env.db.url
@@ -23,7 +24,7 @@ export const AppDataSource = new DataSource(
         synchronize: false,
         logging: false,
         entities,
-        migrations,
+        migrations: [migrationsPath],
       }
     : {
         // Local development: use individual env vars
@@ -36,6 +37,6 @@ export const AppDataSource = new DataSource(
         synchronize: false,
         logging: false,
         entities,
-        migrations,
+        migrations: [migrationsPath],
       }
 );
