@@ -15,9 +15,9 @@ export const setupSwagger = (app: Express) => {
       servers: [
         {
           url: process.env.NODE_ENV === "production"
-            ? "https://lms-backend-beryl-zeta.vercel.app"
+            ? "https://lms-backend-tpz2.onrender.com"
             : `http://localhost:${process.env.PORT || 3000}`,
-          description: process.env.NODE_ENV === "production" ? "Production" : "Local Development",
+          description: process.env.NODE_ENV === "production" ? "Production (Render)" : "Local Development",
         },
       ],
       components: {
