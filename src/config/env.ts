@@ -5,8 +5,9 @@ dotenv.config();
 export const env = {
   port: process.env.PORT || 5000,
   db: {
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
+    url: process.env.DATABASE_URL,         // Neon / Production
+    host: process.env.DB_HOST || "localhost",
+    port: Number(process.env.DB_PORT) || 5432,
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
