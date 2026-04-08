@@ -2,15 +2,28 @@ import app from "./app";
 import { AppDataSource } from "./config/data-source";
 import { env } from "./config/env";
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("Database connected");
+// Initialize DB connection once (works for both local and Vercel)
+let isInitialized = false;
 
-    app.listen(env.port, () => {
-      console.log(`Server running on port ${env.port}`);
-      console.log(`API documentation available at http://localhost:${env.port}/docs`);
-    });
-  })
-  .catch((err) => {
-    console.error("DB connection error:", err);
+const initializeDb = async () => {
+  if (!isInitialized && !AppDataSource.isInitialized) {
+    await AppDataSource.initialize();
+    isInitialized = true;
+    console.log("Database connected");
+  }
+};
+
+initializeDb().catch((err) => {
+  console.error("DB connection error:", err);
+});
+
+// For local development: start the HTTP server
+if (process.env.NODE_ENV !== "production") {
+  app.listen(env.port, () => {
+    console.log(`Server running on port ${env.port}`);
+    console.log(`API docs: http://localhost:${env.port}/docs`);
   });
+}
+
+// Export for Vercel serverless
+export default app;
