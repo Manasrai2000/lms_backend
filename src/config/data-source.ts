@@ -1,8 +1,17 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { env } from "./env";
+import { User } from "../modules/user/user.model";
+import { Activity } from "../modules/activity/activity.model";
+import { Subscription } from "../modules/subscription/subscription.model";
+import { DeviceSession } from "../modules/device/device.model";
 
 const isProduction = process.env.NODE_ENV === "production";
+
+const entities = [User, Activity, Subscription, DeviceSession];
+const migrations = isProduction
+  ? ["dist/migrations/*.js"]
+  : ["src/migrations/*.ts"];
 
 export const AppDataSource = new DataSource(
   env.db.url
@@ -13,12 +22,8 @@ export const AppDataSource = new DataSource(
         ssl: { rejectUnauthorized: false },
         synchronize: false,
         logging: false,
-        entities: isProduction
-          ? ["dist/modules/**/*.model.js"]
-          : ["src/modules/**/*.model.ts"],
-        migrations: isProduction
-          ? ["dist/migrations/*.js"]
-          : ["src/migrations/*.ts"],
+        entities,
+        migrations,
       }
     : {
         // Local development: use individual env vars
@@ -30,7 +35,7 @@ export const AppDataSource = new DataSource(
         database: env.db.database,
         synchronize: false,
         logging: false,
-        entities: ["src/modules/**/*.model.ts"],
-        migrations: ["src/migrations/*.ts"],
+        entities,
+        migrations,
       }
 );

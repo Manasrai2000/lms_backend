@@ -1,8 +1,11 @@
+// Must be FIRST import — required for TypeORM decorators to work correctly
+import "reflect-metadata";
+
 import app from "./app";
 import { AppDataSource } from "./config/data-source";
 import { env } from "./config/env";
 
-// Initialize DB connection once (works for both local and Vercel)
+// Initialize DB connection once (works for both local and Render)
 let isInitialized = false;
 
 const initializeDb = async () => {
@@ -25,5 +28,5 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// Export for Vercel serverless
+// Export for Render/Vercel serverless
 export default app;
