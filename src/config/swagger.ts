@@ -15,7 +15,7 @@ export const setupSwagger = (app: Express) => {
       servers: [
         {
           url: process.env.NODE_ENV === "production"
-            ? "https://lms-backend-tpz2.onrender.com"
+            ? "https://lms-backend-96fq.onrender.com"
             : `http://localhost:${process.env.PORT || 3000}`,
           description: process.env.NODE_ENV === "production" ? "Production (Render)" : "Local Development",
         },

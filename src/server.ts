@@ -14,7 +14,7 @@ AppDataSource.initialize()
     // Always start the HTTP server (Render is a real server, not serverless)
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
-      console.log(`📖 API docs: https://lms-backend-tpz2.onrender.com/docs`);
+      console.log(`📖 API docs: https://lms-backend-96fq.onrender.com/docs`);
     });
   })
   .catch((err) => {
